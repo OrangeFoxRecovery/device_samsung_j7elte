@@ -1,8 +1,8 @@
 [
 	{
 		"remote":"github",
-		"repository":"Exynos7580/android_kernel_samsung_exynos7580-common",
+		"repository":"OrangeFoxRecovery/kernel_samsung_exynos7580-common",
 		"target_path":"kernel/samsung/exynos7580-common",
-		"revision":"lineage-15.1"
+		"revision":"fox_8.1"
 	}
 ]
