@@ -1,4 +1,4 @@
-name: Building recovery
+name: Building Recovery
 
 on:
 #  release:
@@ -14,7 +14,7 @@ on:
     types: [started]
 
 env:
-  MANIFEST: https://gitlab.com/OrangeFox/Manifest.git -b fox_8.1
+  MANIFEST: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-8.1
   DEVICE: j7elte
   DT_LINK: https://github.com/OrangeFoxRecovery/device_samsung_j7elte.git
   DT_PATH: device/samsung/j7elte
@@ -54,7 +54,15 @@ jobs:
              mkdir work
              cd work
              repo init -u $MANIFEST --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
-             repo sync -j4
+             repo sync -j4 --force-sync
+             cd build
+             wget https://gitlab.com/OrangeFox/sync/-/raw/master/patches/patch-manifest-fox_8.1.diff
+             patch -p1 < patch-manifest-fox_8.1.diff
+             cd -
+             rm -rf bootable/recovery
+             rm -rf vendor/recovery
+             git clone https://gitlab.com/OrangeFox/bootable/Recovery.git bootable/recovery
+             git clone https://gitlab.com/OrangeFox/vendor/recovery.git vendor/recovery
              git clone $DT_LINK --depth=1 --single-branch $DT_PATH
              git clone $CT_LINK --depth=1 --single-branch $CT_PATH
              git clone $KERNEL_LINK --depth=1 --single-branch $KERNEL_PATH
